@@ -61,13 +61,19 @@ const tag = document.createElement("span");
 tag.className = "card-tag";
 
 if (mod.tag === "PAID" && mod.link) {
-    tag.innerHTML = `<a href="${mod.link}" target="_blank" 
-        style="color:red; font-weight:bold; text-decoration:none;">PAID</a>`;
+  // create anchor element inside tag so clicking the label also opens gumroad
+  const a = document.createElement("a");
+  a.href = mod.link;
+  a.target = "_blank";
+  a.style.color = "red";
+  a.style.fontWeight = "bold";
+  a.style.textDecoration = "none";
+  a.textContent = "PAID";
+  tag.appendChild(a);
 } else {
-    tag.textContent = mod.tag;
+  tag.textContent = mod.tag;
 }
 
 body.appendChild(tag);
 card.appendChild(body);
-return card;
  
