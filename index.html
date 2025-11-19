@@ -1,13 +1,78 @@
-
 <!doctype html>
 <html lang="hi">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Farming Website</title>
+  <title>Farming Mods — Demo</title>
+
+  <!-- Google font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>Website Working!</h1>
-  <p>Congratulations! Aapki site live ho sakti hai.</p>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <button class="menu-btn" aria-label="menu"><i class="fa fa-bars"></i></button>
+      <div class="logo">
+        <img src="images/logo.png" alt="logo" class="logo-img" onerror="this.style.display='none'">
+        <span class="logo-text">FARMING</span><span class="logo-sub">.SANDHUMODEL</span>
+      </div>
+
+      <div class="top-actions">
+        <button id="themeToggle" title="Toggle theme"><i class="fa fa-moon"></i></button>
+        <button title="Favorites"><i class="fa fa-heart"></i></button>
+        <button class="search-btn" title="Search"><i class="fa fa-search"></i></button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero / Featured -->
+    <section class="hero container">
+      <div class="hero-card">
+        <img src="images/hero.jpg" alt="hero image" class="hero-img">
+        <div class="hero-overlay">
+          <div class="badge">500 HP</div>
+          <h2>John Deere 3650 Super Edit</h2>
+          <p class="muted">Farming Simulator 25</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Latest -->
+    <section class="container latest-section">
+      <div class="section-header">
+        <h3>Latest Mods</h3>
+        <a class="view-all" href="#">View all »</a>
+      </div>
+
+      <div class="cards-grid" id="cardsGrid">
+        <!-- Cards inserted by script -->
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© <span id="year"></span> Farming.SandhuModel — Demo</p>
+    </div>
+  </footer>
+
+  <!-- Modal for buy -->
+  <div id="modal" class="modal hidden" aria-hidden="true">
+    <div class="modal-content">
+      <button class="close-modal" aria-label="close">&times;</button>
+      <h3 id="modalTitle">Buy / Download</h3>
+      <p id="modalText">This is a demo. Replace this with your payment integration (PayPal / UPI / Stripe).</p>
+      <div class="modal-actions">
+        <a id="demoDownload" class="btn primary" href="#" target="_blank">Demo Download</a>
+        <button class="btn" id="closeBtn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
