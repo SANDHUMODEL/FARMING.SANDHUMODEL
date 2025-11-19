@@ -71,9 +71,8 @@ body{
 
 .thumb img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;    /* Image crop hogi but stretch nahi hogi */
-    object-position: center;
+    height: auto;        /* image apni real height le payegi */
+    object-fit: contain; /* full image shown */
     display: block;
 }
 
