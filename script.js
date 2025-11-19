@@ -57,3 +57,9 @@ if (document.readyState === "loading") {
 } else {
   renderMods();
 }
+// Load mods to the page
+const container = document.getElementById("cardsGrid");
+
+mods.forEach(mod => {
+  container.appendChild(createModCard(mod));
+});
