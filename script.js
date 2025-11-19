@@ -56,20 +56,18 @@ function createModCard(mod) {
   h.className = "card-title";
   h.textContent = mod.title;
   body.appendChild(h);
+// TAG
+const tag = document.createElement("span");
+tag.className = "card-tag";
 
-  // TAG
-  const tag = document.createElement("span");
-  tag.className = "card-tag";
-
-  if (mod.tag === "PAID") {
-    tag.style.color = "red";
-    tag.style.fontWeight = "bold";
-  }
-
-  tag.textContent = mod.tag;
-  body.appendChild(tag);
-
-  card.appendChild(body);
-
-  return card;
+if (mod.tag === "PAID" && mod.link) {
+    tag.innerHTML = `<a href="${mod.link}" target="_blank" 
+        style="color:red; font-weight:bold; text-decoration:none;">PAID</a>`;
+} else {
+    tag.textContent = mod.tag;
 }
+
+body.appendChild(tag);
+card.appendChild(body);
+return card;
+ 
