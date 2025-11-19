@@ -1,8 +1,8 @@
 // --- START: Latest mods data (edit filenames if needed) ---
 const mods = [
-  { title: "KATKAT TRACTOR JONI BHAI FS20", img: "images/tractor1.png", tag: "PAID" },
-  { title: "Swaraj 963 Custom for Farming", img: "images/tractor2.png", tag: "PAID" },
-  { title: "Small Loader Mod",                img: "images/tractor3.png", tag: "FREE" },
+  { title: "BULLDOZER(10 TYRE FS20", img: "images/tractor1.png", tag: "PAID" },
+  { title: "KATKAT JONI BHAI FS20", img: "images/tractor2.png", tag: "PAID" },
+  { title: "SWARAJ 4X4 NEW FS25",                img: "images/tractor3.png", tag: "FREE" },
   { title: "John Deere 3650 Super",           img: "images/tractor1.png", tag: "PAID" }
 ];
 // --- END: Latest mods data ---
