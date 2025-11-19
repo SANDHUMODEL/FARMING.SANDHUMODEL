@@ -1,90 +1,94 @@
-:root{
-  --bg:#f6f7f9;
-  --card:#ffffff;
-  --muted:#7a7f86;
-  --accent:#22a06b;
-  --accent2:#ff9f1c;
-  --text:#0f1724;
-  --paid:#0bb87b;
-}
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family: 'Inter', system-ui, Arial;
-  background:var(--bg);
-  color:var(--text);
-  -webkit-font-smoothing:antialiased;
-}
-.container{
-  max-width:980px;
-  margin:0 auto;
-  padding:0 16px;
-}
+// Basic data + interactivity
+document.addEventListener('DOMContentLoaded', () => {
+  // fill year
+  document.getElementById('year').textContent = new Date().getFullYear();
 
-/* Topbar */
-.topbar{
-  background: #14202b;
-  color: #fff;
-  padding:10px 0;
-  position:sticky;
-  top:0;
-  z-index:50;
-}
-.topbar-inner{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  justify-content:space-between;
-}
-.logo{display:flex;align-items:center;gap:8px;font-weight:700;font-size:18px}
-.logo-img{width:34px;height:34px;border-radius:6px;object-fit:cover}
-.logo-text{color:#fff}
-.logo-sub{color:#9ad3c7;margin-left:4px;font-weight:600;font-size:13px}
-.top-actions button{background:transparent;color:#fff;border:0;font-size:16px;margin-left:8px;cursor:pointer}
+  // sample products (replace with your items)
+  const products = [
+    { id:1, title: 'Swaraj 963 Simple for Farming', img: 'images/tractor1.jpg', paid: true, href:'#' },
+    { id:2, title: 'Swaraj 963 Custom for...', img: 'images/tractor2.jpg', paid: true, href:'#' },
+    { id:3, title: 'Small Loader Mod', img: 'images/tractor3.jpg', paid: false, href:'#' },
+    { id:4, title: 'John Deere 3650 Super', img: 'images/tractor4.jpg', paid: true, href:'#' }
+  ];
 
-/* Hero */
-.hero{padding:18px 16px}
-.hero-card{
-  border-radius:12px;overflow:hidden;position:relative;background:linear-gradient(180deg,#e9f0f6,#d5e6f2);
-  box-shadow:0 6px 20px rgba(10,10,10,0.06);
-}
-.hero-img{width:100%;height:220px;object-fit:cover;display:block;filter:brightness(0.8)}
-.hero-overlay{position:absolute;left:18px;bottom:18px;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,0.45)}
-.badge{background:rgba(0,0,0,0.45);padding:6px 10px;border-radius:8px;font-weight:700;display:inline-block;margin-bottom:8px}
-.hero-overlay h2{margin:0 0 6px;font-size:20px}
-.muted{color:rgba(255,255,255,0.85);font-size:13px}
+  const grid = document.getElementById('cardsGrid');
 
-/* Latest */
-.latest-section{padding:10px 16px 40px}
-.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-.section-header h3{margin:0}
-.view-all{color:var(--accent2);text-decoration:none;font-size:14px}
+  products.forEach(p => {
+    const card = document.createElement('article');
+    card.className = 'card';
+    card.innerHTML = `
+      <div class="thumb">
+        <img src="${p.img}" alt="${p.title}" onerror="this.src='images/placeholder.jpg'">
+        <button class="fav" title="Favorite"><i class="fa-regular fa-heart"></i></button>
+      </div>
+      <div class="card-body">
+        <h4>${p.title}</h4>
+        <div class="card-footer">
+          <div class="price">
+            <button class="buy-btn" data-id="${p.id}">${p.paid ? 'Buy Now' : 'Download'}</button>
+            <span class="tag ${p.paid ? 'paid' : 'free'}">${p.paid ? 'PAID' : 'FREE'}</span>
+          </div>
+        </div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
 
-/* Cards grid */
-.cards-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
-.card{background:var(--card);border-radius:12px;overflow:hidden;box-shadow:0 6px 18px rgba(12,14,19,0.04);display:flex;flex-direction:column}
-.thumb{position:relative;height:140px;overflow:hidden}
-.thumb img{width:100%;height:100%;object-fit:cover;display:block}
-.fav{position:absolute;right:8px;top:8px;background:rgba(255,255,255,0.95);border:0;padding:8px;border-radius:50%;box-shadow:0 6px 14px rgba(12,14,19,0.08);cursor:pointer}
-.card-body{padding:12px}
-.card-body h4{margin:0 0 10px;font-size:15px}
-.card-footer{display:flex;justify-content:space-between;align-items:center}
-.buy-btn{background:var(--accent2);border:0;color:#fff;padding:8px 12px;border-radius:8px;font-weight:600;cursor:pointer}
-.tag{font-size:12px;font-weight:700;padding:6px 8px;border-radius:6px}
-.paid{background:rgba(11,184,123,0.12);color:var(--paid)}
+  // favorite buttons
+  document.querySelectorAll('.fav').forEach(btn=>{
+    btn.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      const icon = btn.querySelector('i');
+      icon.classList.toggle('fa-solid');
+      icon.classList.toggle('fa-regular');
+      // small toast
+      showToast('Added to favorites (demo)');
+    });
+  });
 
-/* footer */
-.site-footer{padding:16px 0;background:transparent;text-align:center;color:var(--muted)}
+  // buy buttons open modal
+  const modal = document.getElementById('modal');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalText = document.getElementById('modalText');
+  document.querySelectorAll('.buy-btn').forEach(b=>{
+    b.addEventListener('click', (e)=>{
+      const id = b.dataset.id;
+      const prod = products.find(x=>x.id==id);
+      modalTitle.textContent = prod.title;
+      modalText.textContent = prod.paid ? 'This product is paid. Replace this with your payment flow.' : 'Free download. Add real download link here.';
+      document.getElementById('demoDownload').href = prod.href || '#';
+      modal.classList.remove('hidden');
+      modal.setAttribute('aria-hidden','false');
+    });
+  });
 
-/* modal */
-.modal{position:fixed;left:0;top:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.35)}
-.modal.hidden{display:none}
-.modal-content{background:#fff;padding:20px;border-radius:10px;max-width:420px;width:90%;position:relative}
-.close-modal{position:absolute;right:10px;top:8px;border:0;background:transparent;font-size:20px;cursor:pointer}
-.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:12px}
-.btn{padding:8px 12px;border-radius:8px;border:1px solid #ddd;background:#fff;cursor:pointer}
-.btn.primary{background:var(--accent);color:#fff;border:0}
+  document.querySelectorAll('.close-modal, #closeBtn').forEach(x=>{
+    x.addEventListener('click', ()=> {
+      modal.classList.add('hidden');
+      modal.setAttribute('aria-hidden','true');
+    });
+  });
 
-/* Responsive */
-@media (min-width:900px){.cards-grid{grid-template-columns:repeat(3,1fr)}.hero-img{height:300px}}
-@media (max-width:420px){.cards-grid{grid-template-columns:repeat(1,1fr)}.hero-img{height:180px}}
+  // theme toggle simple
+  document.getElementById('themeToggle')?.addEventListener('click', ()=>{
+    document.documentElement.classList.toggle('dark-mode');
+    const i = document.getElementById('themeToggle').querySelector('i');
+    if (i) i.className = document.documentElement.classList.contains('dark-mode') ? 'fa fa-sun' : 'fa fa-moon';
+    if(document.documentElement.classList.contains('dark-mode')){
+      document.body.style.background = '#081019';
+      document.body.style.color = '#dfeef6';
+    } else {
+      document.body.style.background = '';
+      document.body.style.color = '';
+    }
+  });
+
+  function showToast(text='') {
+    const t = document.createElement('div');
+    t.textContent = text;
+    t.style.position='fixed'; t.style.bottom='20px'; t.style.left='50%'; t.style.transform='translateX(-50%)';
+    t.style.background='rgba(0,0,0,0.75)'; t.style.color='#fff'; t.style.padding='8px 14px'; t.style.borderRadius='8px';
+    document.body.appendChild(t);
+    setTimeout(()=>t.remove(),1500);
+  }
+});
